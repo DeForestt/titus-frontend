@@ -66,14 +66,5 @@
 
   const auth = getAuth()
   const router = useRouter()
-
-  onBeforeMount(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push("/dashboard")
-      }
-    })
-  })
-
 </script>
 

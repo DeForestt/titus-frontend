@@ -41,14 +41,14 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { store } from "../store";
+import { store, HTTP } from "../store";
 import axios from "axios";
 import Card from "primevue/card";
 import ScrollPanel from "primevue/scrollpanel";
 
 const getChurch = async (token) => {
   try {
-    const res = await axios.get(`http://localhost:8080/churches/${store.user.church_id.$oid}`, {
+    const res = await HTTP.get(`/churches/${store.user.church_id.$oid}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

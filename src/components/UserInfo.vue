@@ -34,14 +34,15 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { store } from "../store";
+import { getAuth } from "firebase/auth";
+import { store, HTTP } from "../store";
 import axios from "axios";
 import Card from "primevue/card";
 import ScrollPanel from "primevue/scrollpanel";
 
 const getUser = async (token) => {
   try {
-    const res = await axios.get("http://localhost:8080/users/me", {
+    const res = await HTTP.get("/users/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -3,6 +3,8 @@ import "./style.css";
 import App from "./App.vue";
 import router from "./router";
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getMe, getChurch, getMembers } from "./utils";
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 
@@ -15,6 +17,7 @@ const firebaseConfig = {
   appId: "1:760270556512:web:890442052e8a5338166205",
   measurementId: "G-VSJQBCDMHG"
 };
+
 
 initializeApp(firebaseConfig);
 
@@ -32,3 +35,4 @@ app.use(PrimeVue, {
   }
 });
 app.mount('#app');
+
