@@ -3,8 +3,6 @@ import "./style.css";
 import App from "./App.vue";
 import router from "./router";
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getMe, getChurch, getMembers } from "./utils";
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 

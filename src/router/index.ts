@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter,  createWebHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import("../views/dashboard.vue"),
     },
     {
-      path: "/:onboarding",
+      path: "/onboarding",
       component: () => import("../views/create_account.vue"),
     },
   ],

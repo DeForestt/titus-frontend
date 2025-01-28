@@ -4,6 +4,18 @@
         <template #start>
           <img src="./assets/vue.svg" alt="primevue" href="/">
         </template>
+        <template #item="{ item, props }">
+          <router-link v-if="item.route" :to="item.route" class="p-menuitem-link" @click="item.command">
+            <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+              <span :class="item.icon" />
+              <span>{{ item.label }}</span>
+            </a>
+          </router-link>
+          <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+            <span :class="item.icon" />
+            <span>{{ item.label }}</span>
+          </a>
+        </template>
       </MenuBar>
     </div>
     <router-view />
@@ -37,33 +49,34 @@ onAuthStateChanged(auth, (user) => {
 
 // Links configuration
 const links = [
-  { label: "Home", 
-    url: "/",
+  { 
+    label: "Home", 
+    route: "/",
     auth: null,
     icon: "pi pi-fw pi-home",
   },
   { 
     label: "Dashboard",
-    url: "/dashboard", 
+    route: "/dashboard", 
     auth: true,
     icon: "pi pi-fw pi-th-large",
   },
   {
     label: "Sign Out",
-    url: "/",
+    route: "/",
     auth: true,
     command: logOut,
     icon: "pi pi-fw pi-sign-out",
   },
   {
     label: "Register",
-    url: "/register",
+    route: "/register",
     auth: false,
     icon: "pi pi-fw pi-user-plus",
   },
   {
     label: "Login",
-    url: "/sign-in",
+    route: "/sign-in",
     auth: false,
     icon: "pi pi-fw pi-sign-in",
   },

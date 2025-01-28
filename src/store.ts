@@ -1,13 +1,12 @@
 import { reactive } from 'vue';
 import axios from 'axios';
 import { config } from 'dotenv';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-if (process.env.NODE_ENV === 'development') {
-  const { config } = await import('dotenv');
+if (import.meta.env.NODE_ENV === 'development') {
+  config();
 }
 
-const fallbackurl = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://titus-backend.fly.dev/';
+const fallbackurl = import.meta.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://titus-backend.fly.dev/';
 
 export const store = reactive({
   user: null,

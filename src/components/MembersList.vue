@@ -1,23 +1,31 @@
 <template>
-  <ScrollPanel style="height: 100%; width: 100%;">
     <Card class="p-card" :style="{ width: '100%', height: '100%' }">
       <template #header>
-        <div class="flex align-items-center justify-content-between">
-          <h2 class="text-xl font-semibold">Members List</h2>
+        <div class="flex justify-between">
+          <h2 class="text-xl font-bold">Members List</h2>
         </div>
       </template>
       <template #content>
         <div>
-          <Button
-            label="Add Member"
-            icon="pi pi-plus"
-            class="p-button-sm mb-4"
-            @click="addMember"
-          />
-
-          <DataTable :value="store.members" size="small">
+          <DataTable scrollable stripedRows :value="store.members" size="small"
+            :globalFilterFields="['name.first', 'name.last', 'email', 'phone', 'role']"
+            v-model:filters="filters"
+          >
+            <template #header>
+              <div class="flex justify-between items-center w-full">
+                <Button label="Add Member" icon="pi pi-plus" @click="addMember" />
+                <div class="flex items-center">
+                  <IconField>
+                    <InputIcon icon="pi pi-search" class="p-mr-2">
+                      <i class="pi pi-search" />
+                    </InputIcon>
+                    <InputText placeholder="Search" v-model="filters['global'].value" class="p-mr-2" />
+                  </IconField>
+                </div>
+              </div>
+            </template>
             <!-- First Name -->
-            <Column field="name.first" >
+            <Column field="name.first" sortable frozen>
               <template #header>
                 <div class="flex flex-col">
                   <span>First Name</span>
@@ -32,7 +40,7 @@
             </Column>
 
             <!-- Last Name -->
-            <Column field="name.last" >
+            <Column field="name.last" sortable frozen>
               <template #header>
                 <div class="flex flex-col">
                   <span>Last Name</span>
@@ -181,7 +189,6 @@
         </div>
       </template>
     </Card>
-  </ScrollPanel>
 </template>
 
 <script setup>
@@ -194,9 +201,17 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
+import IconField from "primevue/iconfield";
+import InputIcon from "primevue/inputicon";
 import Checkbox from "primevue/checkbox";
+import { FilterMatchMode } from "@primevue/core/api";
 import { store, HTTP } from "../store";
 import { getMembers } from "../utils";
+
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
 
 const newMember = ref({
   name: {
@@ -227,6 +242,7 @@ const addMember = async () => {
     console.error("No church found");
     return;
   }
+  newMember.value.church_id = store.church._id;
 
   try {
     const res = await HTTP.post("/members", newMember.value, {
@@ -253,6 +269,10 @@ const addMember = async () => {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.mt-1 {
+  max-width: 100px;
 }
 
 .mb-4 {
