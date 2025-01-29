@@ -10,6 +10,10 @@
           <DataTable scrollable stripedRows :value="store.members" size="small"
             :globalFilterFields="['name.first', 'name.last', 'email', 'phone', 'role']"
             v-model:filters="filters"
+            @rowSelect="$emit('selectUser', $event.data)"
+            @rowUnselect="$emit('unselectUser', $event.data)"
+            v-model:selection="selectedMember"
+            selectionMode="single"
           >
             <template #header>
               <div class="flex justify-between items-center w-full">
@@ -212,6 +216,8 @@ import { getMembers } from "../utils";
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+const selectedMember = ref(null);
 
 const newMember = ref({
   name: {

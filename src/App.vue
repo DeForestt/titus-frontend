@@ -2,7 +2,9 @@
     <div class="card">
       <MenuBar :model="filteredLinks">
         <template #start>
-          <img src="./assets/vue.svg" alt="primevue" href="/">
+          <div class="logo-container">
+            <img src="/logo.svg" alt="primevue" class="menu-logo" href="/"/>
+          </div>
         </template>
         <template #item="{ item, props }">
           <router-link v-if="item.route" :to="item.route" class="p-menuitem-link" @click="item.command">
@@ -85,3 +87,17 @@ const filteredLinks = computed(() => links.filter((link) => link.auth === isLogg
 
 </script>
 
+<style>
+  .logo-container {
+  display: flex;
+  align-items: center; /* Centers the logo in the menu bar */
+  height: 100%; /* Matches the height of the MenuBar */
+  padding: 0 1rem; /* Adds some space around the logo */
+  }
+
+  .menu-logo {
+  max-height: clamp(40px, 8vh, 80px); /* Responsive height */
+  width: auto; /* Maintains aspect ratio */
+  object-fit: contain; /* Ensures it doesn't get stretched */
+  }
+</style>
