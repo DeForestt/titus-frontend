@@ -4,7 +4,7 @@
         <template #start>
           <div class="logo-container">
               <router-link to="/" class="p-menuitem-link">
-                <img src="/logo.svg" alt="primevue" class="menu-logo" />
+                <img :src="logo" alt="primevue" class="menu-logo" />
               </router-link>
           </div>
         </template>
@@ -36,6 +36,7 @@
 
 <script setup>
 import { ref, computed} from "vue";
+import { useDark } from "@vueuse/core";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
 import MenuBar from "primevue/menubar";
@@ -43,6 +44,8 @@ import { store } from "./store";
 
 const auth = getAuth();
 const router = useRouter();
+const isDark = useDark();
+const logo = ref(isDark.value ? "/logo-dark.svg" : "/logo.svg");
 
 const logOut = async () => {
   try {

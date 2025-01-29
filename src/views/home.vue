@@ -6,7 +6,7 @@
       <!-- Content (Ensures it's above the image) -->
       <div class="relative z-10 max-w-2xl px-4">
         <h1 class="text-5xl font-bold text-gray-900">Welcome to Titus</h1>
-        <p class="text-lg mt-4 text-gray-900">
+        <p class="text-lg mt-4 text-gray-900 drop-shadow-[0_0_20px_rgba(255,255,255,1)]">
           The ultimate tool for churches to manage budgets, track tithes and offerings, and handle membership seamlessly.
         </p>
         <router-link to="/register">

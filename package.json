@@ -12,6 +12,7 @@
     "@primevue/forms": "^4.2.5",
     "@primevue/themes": "^4.2.5",
     "@tailwindcss/vite": "^4.0.0",
+    "@vueuse/core": "^12.5.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "firebase": "^11.2.0",
