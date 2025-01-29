@@ -1,24 +1,18 @@
 <template>
 <Splitter style="height: 100vh" class="mb-8" >
-  <SplitterPanel class="flex items-center justify-center" :size="95">
+  <SplitterPanel class="flex items-center justify-center" :size="70">
     <MembersList
       @selectUser="selectedMember = $event"
       @unselectUser="selectedMember = null"
     />
   </SplitterPanel>
-  <SplitterPanel class="flex items-center justify-center"
-    v-if="selectedMember"
+  <SplitterPanel class="flex"
+    v-if="selectedMember" :size="30"
   > 
     <MemberInfo
       :member="selectedMember"
     />
   </SplitterPanel>
-  <SplitterPanel class="flex items-center justify-center" :size="5">
-    <Splitter style="height: 100vh" layout="vertical">
-      <SplitterPanel class="flex"> <ChurchInfo /> </SplitterPanel>
-      <SplitterPanel class="flex items-center justify-center"> <UserInfo /> </SplitterPanel>
-      </Splitter>
-    </SplitterPanel>
 </Splitter>
 </template>
 
@@ -52,6 +46,9 @@ onBeforeMount( () => {
     }
     let token = await user.getIdToken();
     store.user = await getMe(token);
+    if (! store.user) {
+      router.push("/onboarding");
+    }
     store.church = await getChurch(token);
     if (! store.church) {
       router.push("/onboarding");

@@ -3,7 +3,9 @@
       <MenuBar :model="filteredLinks">
         <template #start>
           <div class="logo-container">
-            <img src="/logo.svg" alt="primevue" class="menu-logo" href="/"/>
+              <router-link to="/" class="p-menuitem-link">
+                <img src="/logo.svg" alt="primevue" class="menu-logo" />
+              </router-link>
           </div>
         </template>
         <template #item="{ item, props }">
@@ -18,6 +20,15 @@
             <span>{{ item.label }}</span>
           </a>
         </template>
+        <template #end>
+          <!-- user name and church name -->
+          <div class="flex flex-col items-end"
+              v-if="store.user && store.church"
+            >
+            <span class="text-sm font-semibold">{{ store.user.name.first }} {{store.user.name.last}}</span>
+            <span class="text-xs text-gray-500">{{ store.church.name }}</span>
+          </div>
+        </template>
       </MenuBar>
     </div>
     <router-view />
@@ -28,6 +39,7 @@ import { ref, computed} from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
 import MenuBar from "primevue/menubar";
+import { store } from "./store";
 
 const auth = getAuth();
 const router = useRouter();
@@ -35,6 +47,8 @@ const router = useRouter();
 const logOut = async () => {
   try {
     await signOut(auth);
+    store.user = null;
+    store.church = null;
     router.push("/");
   } catch (error) {
     console.error(error);
