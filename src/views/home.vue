@@ -1,20 +1,25 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- Hero Section with Background Image -->
-    <div class="relative w-full h-[500px] flex items-center justify-center text-center text-white bg-cover bg-center" 
-      style="background-image: url('/hero-image.jpg');">
-      <!-- Content (Ensures it's above the image) -->
-      <div class="relative z-10 max-w-2xl px-4">
-        <h1 class="text-5xl font-bold text-gray-900">Welcome to Titus</h1>
-        <p class="text-lg mt-4 text-gray-900 drop-shadow-[0_0_20px_rgba(255,255,255,1)]">
-          The ultimate tool for churches to manage budgets, track tithes and offerings, and handle membership seamlessly.
-        </p>
-        <router-link to="/register">
-          <Button label="Get Started" icon="pi pi-arrow-right" class="p-button-raised p-button-lg mt-6" />
-        </router-link>
+    <!-- Hero Section -->
+    <div class="relative w-full h-[500px] flex items-center justify-center text-white bg-cover bg-center">
+      <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+        <!-- Text Section -->
+        <div class="w-full md:w-2/5 text-left">
+          <h1 class="text-5xl font-bold text-gray-900">Welcome to Titus</h1>
+          <p class="text-lg mt-4 text-gray-900 drop-shadow-[0_0_20px_rgba(255,255,255,1)]">
+            The ultimate tool for churches to manage budgets, track tithes and offerings, and handle membership seamlessly.
+          </p>
+          <router-link to="/register">
+            <Button label="Get Started" icon="pi pi-arrow-right" class="p-button-raised p-button-lg mt-6" />
+          </router-link>
+        </div>
+        
+        <!-- Image Section -->
+        <div class="w-full md:w-3/5">
+          <img src="/hero-image.jpg" alt="Hero Image" class="w-full h-auto object-cover rounded-lg shadow-lg" />
+        </div>
       </div>
     </div>
-
     <!-- Features Section -->
     <section class="py-16 bg-gray-100 dark:bg-gray-800">
       <div class="container mx-auto px-4">
@@ -54,4 +59,3 @@
 import Button from "primevue/button";
 import Panel from "primevue/panel";
 </script>
-
