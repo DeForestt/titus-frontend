@@ -16,5 +16,6 @@ export const store = reactive({
 
 export const HTTP = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL || fallbackurl, // Fallback to production URL
+  // baseURL: import.meta.env.VITE_BASE_URL || 'http://localhost:8080', // Fallback to localhost
 });
 

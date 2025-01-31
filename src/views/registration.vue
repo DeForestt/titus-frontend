@@ -87,7 +87,7 @@ const register = async () => {
       return;
     }
     await createUserWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/dashboard");
+    router.push("/onboarding");
   } catch (e) {
     error.value = e.message;
   }

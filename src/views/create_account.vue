@@ -142,7 +142,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth } from "firebase/auth";
-import { store } from "../store";
+import { store, HTTP } from "../store";
 import axios from "axios";
 
 const router = useRouter();
@@ -182,7 +182,7 @@ const onboard = async () => {
 
   try {
     error.value = null;
-    let rsp = await axios.post("http://localhost:8080/churches", church_body);
+    let rsp = await HTTP.post("/churches", church_body);
     const church_id = await rsp.data._id;
 
 
@@ -193,7 +193,7 @@ const onboard = async () => {
       auth_id: currentUser.uid,
     };
 
-    let user_rsp = await axios.post("http://localhost:8080/users", user_body);
+    let user_rsp = await HTTP.post("/users", user_body);
     store.user = user_rsp.data;
     router.push("/dashboard");
 
