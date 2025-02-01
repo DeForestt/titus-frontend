@@ -1,53 +1,51 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-6">
     <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-md">
-      <h1 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6 text-center">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 text-center">
         Sign In
       </h1>
-      <form @submit.prevent="signIn">
-        <div class="mb-4">
-          <label
-            for="email"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            type="text"
-            placeholder="Email"
-            v-model="email"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+      
+      <Form v-slot="$form" :initialValues :resolver @submit="signIn" class="flex flex-col gap-6 w-full">
+        <div class="flex flex-col gap-2">
+          <label class="text-gray-700 dark:text-gray-300 text-sm font-medium">Email</label>
+          <InputText 
+            placeholder="Enter your email" 
+            name="email" 
+            type="email" 
+            v-model="email" 
+            class="p-3 border rounded-lg dark:bg-gray-700 dark:text-white"
           />
+          <Message v-if="$form.email?.invalid" severity="error" size="small" variant="filled">
+            {{ $form.email.error?.message }}
+          </Message>
         </div>
-        <div class="mb-6">
-          <label
-            for="password"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-          >
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            v-model="password"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+
+        <div class="flex flex-col gap-2">
+          <label class="text-gray-700 dark:text-gray-300 text-sm font-medium">Password</label>
+          <InputText 
+            placeholder="Enter your password" 
+            name="password" 
+            type="password" 
+            v-model="password" 
+            class="p-3 border rounded-lg dark:bg-gray-700 dark:text-white"
           />
+          <Message v-if="$form.password?.invalid" severity="error" size="small" variant="filled">
+            {{ $form.password.error?.message }}
+          </Message>
         </div>
-        <!-- Error Message -->
-        <div class="mb-6" v-if="error">
-          <p class="text-red-500 text-sm">{{ error }}</p>
-        </div>
-        <div class="flex justify-center">
-          <button
-            type="submit"
-            class="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
-          >
-            Sign In
-          </button>
-        </div>
-      </form>
+        
+        <Button 
+          type="submit" 
+          label="Sign In" 
+          severity="primary" 
+          class="w-full py-3 text-lg"
+        />
+        
+        <Message v-if="error" severity="error" size="small" variant="filled">
+          {{ error }}
+        </Message>
+      </Form>
+      
       <p class="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
         Don't have an account?
         <router-link to="/register" class="text-blue-600 hover:underline">
@@ -59,9 +57,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Form } from "@primevue/forms";
+import InputText from "primevue/inputtext";
+import Message from "primevue/message";
+import Button from "primevue/button";
 
 const email = ref("");
 const password = ref("");
@@ -70,13 +72,37 @@ const error = ref(null);
 const auth = getAuth();
 const router = useRouter();
 
-const signIn = async () => {
+const initialValues = reactive({
+  email: "",
+  password: ""
+});
+
+const resolver = async ({ values }) => {
+  const errors = {};
+  if (!values.email) {
+    errors.email = [{ message: "Email is required" }];
+  }
+
+  if (!values.password) {
+    errors.password = [{ message: "Password is required" }];
+  }
+
+  return {
+    errors,
+  };
+};
+
+const signIn = async ({ valid }) => {
+  if (!valid) {
+    return;
+  }
+  
   try {
-    error.value = null; // Clear previous errors
+    error.value = null;
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/dashboard"); // Navigate to the dashboard
+    router.push("/dashboard");
   } catch (e) {
-    error.value = e.message; // Display the error message
+    error.value = e.message;
   }
 };
 </script>
