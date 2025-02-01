@@ -1,0 +1,21 @@
+<svg width="500" height="500" viewBox="160 168 180 192" xmlns="http://www.w3.org/2000/svg" fill="white">
+  <!-- Cross -->
+  <rect x="230" y="168" width="40" height="100" fill="white" />
+  <rect x="190" y="210" width="120" height="30" fill="white" />
+  
+  <!-- Bar Chart -->
+  <rect x="170" y="320" width="15" height="40" fill="white" />
+  <rect x="195" y="300" width="15" height="60" fill="white" />
+  <rect x="220" y="270" width="15" height="90" fill="white" />
+  <rect x="250" y="280" width="15" height="80" fill="white" />
+  <rect x="275" y="300" width="15" height="60" fill="white" />
+  <rect x="300" y="320" width="15" height="40" fill="white" />
+  
+  <!-- Trend Lines -->
+  <polyline points="160,330 175,315 190,325 210,300 230,280" stroke="white" stroke-width="3" fill="none" />
+  <polyline points="270,260 285,280 300,270 315,290 330,280" stroke="white" stroke-width="3" fill="none" />
+  
+  <!-- Axes -->
+  <line x1="160" y1="360" x2="340" y2="360" stroke="white" stroke-width="2" />
+</svg>
+
